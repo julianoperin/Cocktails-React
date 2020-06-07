@@ -8,10 +8,24 @@ const Home = () => {
   const [cocktails, setCocktails] = useState([]);
 
   React.useEffect(() => {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita")
-      .then((response) => response.json())
-      .then((data) => setCocktails(data.drinks));
-  }, []);
+    async function getDrinks() {
+      try {
+        const response = await fetch(
+          `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`
+        );
+        const data = await response.json();
+        const { drinks } = data;
+        if (drinks) {
+          const newCocktails = drinks.map((item) => {});
+        } else {
+          setCocktails([]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDrinks();
+  }, [searchTerm]);
 
   return (
     <main>

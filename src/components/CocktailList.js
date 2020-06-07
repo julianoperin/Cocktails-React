@@ -1,6 +1,6 @@
 import React from "react";
 
-const CocktailList = (cocktails) => {
+const CocktailList = ({ cocktails }) => {
   console.log(cocktails);
 
   return (
