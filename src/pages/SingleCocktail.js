@@ -1,13 +1,36 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const SingleCocktail = (props) => {
+const SingleCocktail = () => {
   const { id } = useParams();
-  console.log(id);
+  const [loading, setLoading] = React.useState(false);
+  const [cocktail, setCocktail] = React.useState(null);
+
+  React.useEffect(() => {
+    setLoading(true);
+    async function getCocktail() {
+      try {
+        const response = await fetch(
+          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+        );
+        const data = await response.json();
+        if (data.drinks) {
+          console.log(data.drinks);
+        } else {
+          setCocktail(null);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(true);
+      }
+    }
+    getCocktail();
+  }, [id]);
 
   return (
     <div>
-      <h1>SingleCocktail: {id}</h1>
+      hello
+      <h1>Single Cocktail: {id}</h1>
     </div>
   );
 };
